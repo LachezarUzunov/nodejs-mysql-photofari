@@ -33,6 +33,7 @@ const User = sequelize.define('user', {
     // timestamps: false
 });
 
+module.exports = User;
 
 // ------- CREATING TABLES ---------- //
 // const createTable = async () => {

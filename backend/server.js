@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv').config();
 const PORT = process.env.PORT || 8000;
-const {connectDB} = require('./config/db');
+const { connectDB } = require('./config/db');
 
 // Connecting to the mySQL databsae
 connectDB();
@@ -30,6 +30,6 @@ next();
 });
 
 // ROUTES
-app.use('/api/photos', require('./routes/userRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

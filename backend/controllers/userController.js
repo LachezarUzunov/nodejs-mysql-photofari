@@ -7,6 +7,7 @@ const User = require('../models/userModel');
 // @access      private
 async function registerUser (req, res) {
     const {name, email, password} = req.body;
+    console.log(req.body)
 
     // Validation
     if (!name || !email || !password) {
@@ -16,22 +17,22 @@ async function registerUser (req, res) {
 
     try {
         // USING BUILD / SAVE method
-        // const newUser = User.build({
-        //     name,
-        //     email,
-        //     password
-        // })
-
-        // const user = await newUser.save();
-
-        // USING CREATE METHOD
-        const res = await User.create({
+        const newUser = User.build({
             name,
             email,
             password
         })
 
-        const user = res.toJSON();
+        const user = await newUser.save();
+
+        // USING CREATE METHOD
+        // const res = await User.create({
+        //     name,
+        //     email,
+        //     password
+        // })
+        console.log(user);
+        //const user = res.toJSON();
 
         if (user) {
             res.status(201).json({

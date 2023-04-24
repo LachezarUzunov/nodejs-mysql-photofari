@@ -27,7 +27,7 @@ const publishPhoto = async (photo, token) => {
   }
 };
 
-// GET Last Three recipes
+// GET Last Three photos
 const getLastTen = async () => {
   const response = await fetch(`http://localhost:5000/api/photos/lastTen`);
 
