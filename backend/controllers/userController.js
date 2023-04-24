@@ -15,12 +15,16 @@ async function registerUser (req, res) {
         throw new Error('Моля въведете всички полета')
     }
 
+    // Hash password
+    const salt = await brcypt.genSalt(10);
+    const hashedPassword = await brcypt.hash(password, salt)
+
     try {
         // USING BUILD / SAVE method
         const newUser = User.build({
             name,
             email,
-            password
+            password: hashedPassword
         })
 
         const user = await newUser.save();
