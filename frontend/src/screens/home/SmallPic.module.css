@@ -1,0 +1,10 @@
+.article {
+  margin: 0 auto;
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+  width: 350px;
+}
+
+.picsList img {
+  max-width: 350px;
+}

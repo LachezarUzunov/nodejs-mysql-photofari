@@ -33,13 +33,27 @@ const User = sequelize.define('user', {
     // timestamps: false
 });
 
-const createTable = async () => {
+
+// ------- CREATING TABLES ---------- //
+// const createTable = async () => {
+//     try {
+//         const res = await User.sync();
+//         console.log('Table and model synced successfully')
+//     } catch (err) {
+//         console.log('Error syncing the table and the model')
+//     }
+// }
+
+// createTable();
+
+// -------- UPDATING TABLES ------------ //
+const updateTable = async () => {
     try {
-        const res = await User.sync();
-        console.log('Table and model synced successfully')
+        await User.sync({ alter: true });
+        console.log('Table and model synced successfully!')
     } catch (err) {
-        console.log('Error syncing the table and the model')
+        console.log('Could not sync table and model')
     }
 }
 
-createTable();
+//updateTable();

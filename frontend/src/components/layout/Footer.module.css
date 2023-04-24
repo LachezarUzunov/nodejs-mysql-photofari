@@ -1,0 +1,20 @@
+.footer {
+  height: 10vh;
+  background-color: var(--aqua);
+  display: flex;
+}
+
+.footer p {
+  vertical-align: middle;
+  color: black;
+  font-size: 1.4rem;
+  padding-left: 40px;
+  padding-top: 2.8rem;
+}
+
+/* ============= MEDIA QUERIES (SMALL DEVICES) ============== */
+@media screen and (max-width: 450px) {
+  .footer {
+    height: 6rem;
+  }
+}

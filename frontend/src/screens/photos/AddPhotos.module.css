@@ -1,0 +1,12 @@
+.form {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.upload__button {
+  margin: 1rem auto;
+}

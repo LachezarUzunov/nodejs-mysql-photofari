@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Alkatra&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Righteous&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 
+    font-family: 'Alkatra', cursive;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Righteous', cursive;
+*/
+
+:root {
+  --baby-blue: #e7f2f8;
+  --aqua: #74bdcb;
+  --salmon: #ffa384;
+  --beige: #efe7bc;
+
+  --lg-screen: 70%;
+  --med-screen: 80%;
+  --sm-screen: 90%;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Lato", sans-serif;
+}
+
+li {
+  list-style: none;
+  text-transform: uppercase;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  font-size: 2rem;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
+
+input {
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  border: none;
+  border-bottom: 0.2rem solid var(--baby-blue);
+  height: 3rem;
+  transition: 0.2s ease-in-out;
+  background-color: rgba(245, 245, 220, 0);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: black;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+
+input:focus {
+  outline: none;
+  border-bottom: 0.3rem solid var(--baby-blue);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+label {
+  width: 100%;
+  color: black;
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+textarea {
+  background-color: var(--baby-blue);
+  border: none;
+  color: black;
+  border-radius: 15px;
+  padding: 12px;
+  font-size: 16px;
+  outline: none;
+}
+
+p {
+  font-size: 1.4rem;
+  letter-spacing: 0.1rem;
+  line-height: 1.4;
+}
+
+.main__app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.main {
+  margin: 0 auto;
+  min-height: 80vh;
+  width: var(--lg-screen);
+}
+
+.input__file_label {
+  width: 100%;
+  color: black;
+  font-size: 1.6rem;
+  background-color: var(--aqua);
+  padding: 1rem 4rem;
+  font-weight: 400;
+  border-radius: 25px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.primaryBtn {
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  word-spacing: 4px;
+  color: black;
+  border: none;
+  background-color: var(--salmon);
+  border-radius: 15px;
+  padding: 12px 20px;
+  transition: all 300ms ease-in-out;
+  font-size: 18px;
+  margin-top: 20px;
+}

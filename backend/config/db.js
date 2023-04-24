@@ -1,11 +1,12 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('photofari', 'root', 'Uzu_l0v_Roni', {
+const sequelize = new Sequelize('photofari', 'root', process.env.PASSWORD, {
     host: 'localhost',
     port: 3306,
     dialect: 'mysql'
 });
 
+// ------------ CONNECTING WITH REGULAR FUNCTION --------------- //
 // async function connectDB () {
 //     try {
 //         await sequelize.authenticate();
@@ -25,7 +26,7 @@ const connectDB = async () => {
     }
 }
 
-module.exports = {connectDB, sequelize};
+module.exports = { connectDB, sequelize };
 
 // ------ Connecting with THEN block ---------- //
 // sequelize.authenticate().then(() => {

@@ -1,0 +1,10 @@
+.bg {
+  background-color: var(--aqua);
+  padding: 6rem 10rem;
+  height: 80vh;
+}
+
+.form {
+  width: 50%;
+  margin: 0 auto;
+}

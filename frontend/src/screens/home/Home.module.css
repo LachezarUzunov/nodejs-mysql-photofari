@@ -1,0 +1,17 @@
+.main {
+  min-height: 80vh;
+}
+
+.pics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+}
+
+.heading {
+  text-align: center;
+  padding-top: 6rem;
+  padding-bottom: 1rem;
+  font-size: 4rem;
+  border-bottom: 2px solid var(--aqua);
+}

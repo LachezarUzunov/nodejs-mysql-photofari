@@ -29,4 +29,7 @@ res.header(
 next();
 });
 
+// ROUTES
+app.use('/api/photos', require('./routes/userRoutes'));
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
