@@ -25,7 +25,7 @@ const connectDB = async () => {
     }
 }
 
-module.exports = connectDB;
+module.exports = {connectDB, sequelize};
 
 // ------ Connecting with THEN block ---------- //
 // sequelize.authenticate().then(() => {

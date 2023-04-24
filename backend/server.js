@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv').config();
 const PORT = process.env.PORT || 8000;
-const connectDB = require('./config/db');
+const {connectDB} = require('./config/db');
 
 // Connecting to the mySQL databsae
 connectDB();
