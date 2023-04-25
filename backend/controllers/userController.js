@@ -73,12 +73,12 @@ async function registerUser (req, res) {
 async function loginUser (req, res) {
     const {email, password} = req.body;
 
-    const user = User.findOne({
+    const user = await User.findOne({
         where: {
             email: email
         }
     })
-
+    console.log(user)
     try {
         // Check user and password match
         if (user && (await brcypt.compare(password, user.password))) {
