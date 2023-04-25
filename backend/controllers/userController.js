@@ -7,7 +7,7 @@ const User = require('../models/userModel');
 // @access      private
 async function registerUser (req, res) {
     const {name, email, password} = req.body;
-    console.log(req.body)
+   // console.log(req.body)
 
     // Validation
     if (!name || !email || !password) {
@@ -40,10 +40,11 @@ async function registerUser (req, res) {
 
         if (user) {
             res.status(201).json({
-                id: user._id,
+                id: user.user_id,
                 name: user.name,
                 email: user.email,
                 pics: user.pics,
+                isAdmin: user.isAdmin,
                 token: generateToken(user._id)
             })
         } else {
