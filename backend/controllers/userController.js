@@ -1,6 +1,7 @@
 const brcypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const mapErrors = require('../util/mappers');
 
 // @desc        Register a new user
 // @route       /api/users
@@ -8,18 +9,28 @@ const User = require('../models/userModel');
 async function registerUser (req, res) {
     const {name, email, password} = req.body;
    // console.log(req.body)
-
-    // Validation
-    if (!name || !email || !password) {
-        res.status(400);
-        throw new Error('Моля въведете всички полета')
-    }
-
+    
     // Hash password
     const salt = await brcypt.genSalt(10);
     const hashedPassword = await brcypt.hash(password, salt)
 
     try {
+          // Validation
+        if (!name || !email || !password) {
+        throw new Error('Моля въведете всички полета')
+        }
+
+
+        const userExists = await User.findOne({
+            where: {
+                email: email
+            }
+        })
+    
+        if (userExists) {
+            throw new Error('Потребител с такъв имейл вече съществува');
+        }
+    
         // USING BUILD / SAVE method
         const newUser = User.build({
             name,
@@ -48,11 +59,11 @@ async function registerUser (req, res) {
                 token: generateToken(user._id)
             })
         } else {
-            res.status(400);
             throw new Error('Невалидни данни');
         }
     } catch (err) {
-        console.log(err);
+        const errors = mapErrors(err);
+        res.status(400).json(errors);
     }
 }
 
