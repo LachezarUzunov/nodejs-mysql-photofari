@@ -62,7 +62,6 @@ const createTable = async () => {
 User.hasMany(Photo, { as: 'photos'});
 Photo.belongsTo(User, {
     foreignKey: 'user_id',
-    as: 'user'
 });
 
 //createTable();

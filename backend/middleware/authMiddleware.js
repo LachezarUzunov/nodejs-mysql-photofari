@@ -17,8 +17,9 @@ async function protect (req, res, next) {
                     user_id: decoded.id
                 }
             })
+           // console.log(user)
             req.user = {
-                id: user.user_id,
+                id: user.user_id
             }
 
             next();

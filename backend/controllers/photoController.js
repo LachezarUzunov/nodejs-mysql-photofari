@@ -8,7 +8,7 @@ const mapErrors = require('../util/mappers');
 async function postPhoto (req, res) {
     const { title, description, photo } = req.body;
 
-        console.log('request body from photo controller', req.body)
+        //console.log('request body from photo controller', req.body)
     try {
     // Get user using the id in the JWT
     const user = await User.findOne({
@@ -16,7 +16,7 @@ async function postPhoto (req, res) {
             user_id: req.user.id
         }
     })
-    console.log('User from create photo controller', user);
+  //  console.log('User from create photo controller', user);
    // console.log(user.pics);
 
     if (!user) {
@@ -27,17 +27,17 @@ async function postPhoto (req, res) {
         throw new Error('Нямате право да качите повече от 10 снимки, моля изтрийте някоя първо.')
     }
 
-    const newPhoto = Photo.build({
+    const photoObj = Photo.build({
         title,
         description,
         photo,
         user_id: req.user.id
     })
 
-    const photo = await newPhoto.save();
+    const newPhoto = await photoObj.save();
 
-    if (photo) {
-        req.status(201).json(photo)
+    if (newPhoto) {
+        req.status(201).json(newPhoto)
     } else {
         throw new Error('Невалидно въведена информация.')
     }
