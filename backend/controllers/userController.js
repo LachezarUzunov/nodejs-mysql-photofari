@@ -8,7 +8,6 @@ const mapErrors = require('../util/mappers');
 // @access      private
 async function registerUser (req, res) {
     const {name, email, password} = req.body;
-   // console.log(req.body)
     
     // Hash password
     const salt = await brcypt.genSalt(10);
@@ -67,11 +66,46 @@ async function registerUser (req, res) {
     }
 }
 
+
+// @desc        Login a user
+// @route       /api/users/login
+// @access      Public
+async function loginUser (req, res) {
+    const {email, password} = req.body;
+
+    const user = User.findOne({
+        where: {
+            email: email
+        }
+    })
+
+    try {
+        // Check user and password match
+        if (user && (await brcypt.compare(password, user.password))) {
+            res.status(200).json({
+                id: user.user_id,
+                name: user.name,
+                email: user.email,
+                pics: user.pics,
+                isAdmin: user.isAdmin,
+                token: generateToken(user.user_id)
+            })
+        } else {
+            throw new Error('Невалидни логин детайли!')
+        }
+
+    } catch (err) {
+        const errors = mapErrors(err);
+        res.status(401).json(errors)
+    }
+}
+
 // GENERATE TOKEN
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" })
 };
 
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }
