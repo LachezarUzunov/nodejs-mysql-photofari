@@ -45,7 +45,7 @@ async function registerUser (req, res) {
         //     email,
         //     password
         // })
-        console.log(user);
+    //  console.log(user);
         //const user = res.toJSON();
 
         if (user) {
@@ -78,7 +78,7 @@ async function loginUser (req, res) {
             email: email
         }
     })
-    console.log(user)
+   // console.log(user)
     try {
         // Check user and password match
         if (user && (await brcypt.compare(password, user.password))) {
