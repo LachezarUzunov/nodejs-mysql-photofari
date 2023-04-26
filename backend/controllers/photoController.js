@@ -12,11 +12,21 @@ async function getLastTen (req, res) {
                 photo_id: 1
             }
         })
+
+        const updatedPhoto = {
+            _id : photo.photo_id,
+            title: photo.title,
+            description: photo.description,
+            photo: photo.photo,
+            user: photo.user_id,
+        }
+        let photos = [];
         // const photos = await Photo.findAll({attributes: [['photo_id', '_id'], ['title'], ['description'], ['photo'], ['user_id', 'user']], order: [[photo_id, 'DESC']], limit: 10})
         // console.log(photos)
-        console.log(photo.toJSON())
-        if (photo) {
-            res.status(200).json(photo);
+     
+        if (updatedPhoto) {
+            photos.push(updatedPhoto)
+            res.status(200).json(photos);
         }
     } catch (err) {
         const errors = mapErrors(err);
