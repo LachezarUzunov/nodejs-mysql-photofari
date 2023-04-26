@@ -2,13 +2,34 @@ const User = require('../models/userModel');
 const Photo = require('../models/photoModel');
 const mapErrors = require('../util/mappers');
 
+// @desc        Get latest 10 photos
+// @route       GET api/photos
+// @access      public
+async function getLastTen (req, res) {
+    try {
+        const photo = await Photo.findOne({
+            where: {
+                photo_id: 1
+            }
+        })
+        // const photos = await Photo.findAll({attributes: [['photo_id', '_id'], ['title'], ['description'], ['photo'], ['user_id', 'user']], order: [[photo_id, 'DESC']], limit: 10})
+        // console.log(photos)
+        console.log(photo.toJSON())
+        if (photo) {
+            res.status(200).json(photo);
+        }
+    } catch (err) {
+        const errors = mapErrors(err);
+        res.json(errors);
+    }
+}
+
 // @desc        Publish a new photo
 // @route       POST /api/photos
 // @access      for registered and logged in users only
 async function postPhoto (req, res) {
     const { title, description, photo } = req.body;
 
-        //console.log('request body from photo controller', req.body)
     try {
     // Get user using the id in the JWT
     const user = await User.findOne({
@@ -16,8 +37,6 @@ async function postPhoto (req, res) {
             user_id: req.user.id
         }
     })
-  //  console.log('User from create photo controller', user);
-   // console.log(user.pics);
 
     if (!user) {
         throw new Error('Такъв потребител не съществува')
@@ -49,5 +68,6 @@ async function postPhoto (req, res) {
 }
 
 module.exports = {
-    postPhoto
+    postPhoto,
+    getLastTen,
 }
