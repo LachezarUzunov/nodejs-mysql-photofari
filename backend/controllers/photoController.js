@@ -30,13 +30,14 @@ async function getPhotoById (req, res) {
 // @route       GET api/photos
 // @access      public
 async function getLastTen (req, res) {
+    console.log(req.body)
     try {
         const photo = await Photo.findOne({
             where: {
                 photo_id: 1
             }
         })
-
+        console.log(photo);
         const updatedPhoto = {
             _id : photo.photo_id,
             title: photo.title,

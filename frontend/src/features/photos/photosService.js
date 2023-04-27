@@ -27,7 +27,7 @@ const publishPhoto = async (photo, token) => {
   }
 };
 
-// GET Last Three photos
+// GET Last Ten photos
 const getLastTen = async () => {
   const response = await fetch(`http://localhost:5000/api/photos/lastTen`);
 
@@ -38,9 +38,20 @@ const getLastTen = async () => {
   }
 };
 
+// GET single photo/ by ID
+const getPhotoById = async (photoId) => {
+  const response = await fetch(`${API_URL}/${photoId}`)
+
+  if (response.status === 200) {
+    const photo = await response.json();
+    return photo;
+  }
+}
+
 const photosService = {
   publishPhoto,
   getLastTen,
+  getPhotoById
 };
 
 export default photosService;

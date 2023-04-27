@@ -50,6 +50,24 @@ export const getLastTen = createAsyncThunk(
   }
 );
 
+export const getSinglePhoto = createAsyncThunk(
+  'photo/getPhoto',
+  async(photoId, thunkAPI) => {
+    try {
+      return await photosService.getPhotoById(photoId)
+    } catch (error) {
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return thunkAPI.rejectWithValue(message);
+    }
+  }
+)
+
 export const photosSlice = createSlice({
   name: "photo",
   initialState,
@@ -88,7 +106,23 @@ export const photosSlice = createSlice({
         state.isPhotoLoading = false;
         state.isPhotoError = true;
         state.photoMessage = action.payload;
-      });
+      })
+      // GET single Photo/ by ID/ public
+      .addCase(getSinglePhoto.pending, (state) => {
+        state.isPhotoLoading = true;
+      })
+      .addCase(getSinglePhoto.fulfilled, (state, action) => {
+        state.isPhotoLoading = false;
+        state.isPhotoError = false;
+        state.isPhotoSuccess = true;
+        state.photo = action.payload;
+      })
+      .addCase(getSinglePhoto.rejected, (state, action) => {
+        state.isPhotoLoading = false;
+        state.isPhotoError = true;
+        state.isPhotoSuccess = false;
+        state.photoMessage = action.payload;
+      })
   },
 });
 
