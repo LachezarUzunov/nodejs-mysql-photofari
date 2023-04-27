@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const { DataTypes } = Sequelize;
 const { sequelize } = require('../config/db');
 const Photo = require('./photoModel');
+const Comment = require('./commentModel');
 
 
 const User = sequelize.define('user', {
@@ -52,24 +53,37 @@ module.exports = User;
 // ------- CREATING TABLES ---------- //
 const createTable = async () => {
     try {
-        const res = await Photo.sync();
+        const res = await Comment.sync();
         console.log('Table and model synced successfully')
     } catch (err) {
         console.log('Error syncing the table and the model')
     }
 }
+//createTable();
 
+// Linking Photos and Users
 User.hasMany(Photo, { as: 'photos'});
 Photo.belongsTo(User, {
     foreignKey: 'user_id',
 });
 
-//createTable();
+// Linking Comments and Users
+User.hasMany(Comment, { as: 'comments'});
+Comment.belongsTo(User, {
+    foreignKey: 'user_id',
+});
+
+// Linking Photos and Comments
+Photo.hasMany(Comment, { as: 'comments'});
+Comment.belongsTo(Photo, {
+    foreignKey: 'photo_id',
+});
+
 
 // -------- UPDATING TABLES ------------ //
 const updateTable = async () => {
     try {
-        await Photo.sync({ alter: true });
+        await Comment.sync({ alter: true });
         console.log('Table and model synced successfully!')
     } catch (err) {
         console.log('Could not sync table and model')
