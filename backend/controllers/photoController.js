@@ -20,7 +20,7 @@ async function getPhotoById (req, res) {
             description: photo.description,
             user_id: photo.user_id
         }
-        console.log('single photo', photo)
+       // console.log('single photo', photo)
         if (!photoRes) {
             throw new Error('Снимката не е намерена.')
         } else {
@@ -135,6 +135,7 @@ async function postComment (req, res) {
         const newComment = await commentObj.save();
     
         if (newComment) {
+            console.log(newComment)
             req.status(201).json(newComment);
         } else {
             throw new Error('Невалидно въведена информация.')

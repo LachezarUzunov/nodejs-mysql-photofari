@@ -121,6 +121,12 @@ const SinglePhoto = () => {
                     </div>
                 ) : null}
 
+                {comments.length > 1 ? (
+                    comments.map((comment) => (
+                        <SingleComment comment={comment} key={comment.comment_id}/>
+                    ))
+                ) : <p>Все още няма коментари към тази снимка</p>
+                }
                 <SingleComment />
             </article>
         </section>
