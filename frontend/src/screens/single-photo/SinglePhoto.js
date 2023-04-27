@@ -9,6 +9,7 @@ import { getSinglePhoto, reset } from "../../features/photos/photosSlice";
 
 import { storage } from "../../firebase";
 import { listAll, ref, getDownloadURL } from "firebase/storage";
+import SingleComment from "../../components/comment/SingleComment";
 
 const SinglePhoto = () => {
     const dispatch = useDispatch();
@@ -105,6 +106,8 @@ const SinglePhoto = () => {
 
                     </div>
                 ) : null}
+
+                <SingleComment />
             </article>
         </section>
     )
