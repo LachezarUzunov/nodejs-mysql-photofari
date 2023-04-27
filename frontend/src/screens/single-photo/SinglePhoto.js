@@ -26,9 +26,9 @@ const SinglePhoto = () => {
 
     useEffect(() => {
         setImageListRef(
-            ref(storage, `${photo.user}/${title.split(' ').join('')}/`)
+            ref(storage, `${photo.user_id}/${title.split(' ').join('')}/`)
         );
-    }, [title, photo.user]);
+    }, [title, photo.user_id]);
 
     useEffect(() => {
         listAll(imageListRef).then((res) => {
@@ -39,6 +39,12 @@ const SinglePhoto = () => {
             })
         })
     }, [imageListRef])
+
+    useEffect(() => {
+        if (user) {
+            setActiveUser(user)
+        }
+    }, [user])
 
     useEffect(() => {
         return () => {
@@ -58,7 +64,7 @@ const SinglePhoto = () => {
         // eslint-disable-next-line
     }, [isPhotoError, photoMessage, id])
 
-    const isOwner = activeUser.id === photo.user;
+    const isOwner = activeUser.id === photo.user_id;
 
     if (isPhotoLoading) {
         return <Spinner />

@@ -6,7 +6,6 @@ const mapErrors = require('../util/mappers');
 // @route       GET /api/photos/:id
 // @access      public
 async function getPhotoById (req, res) {
-
     try {
         const photo = await Photo.findOne({
             where: {
@@ -14,10 +13,17 @@ async function getPhotoById (req, res) {
             }
         })
 
-        if (!photo) {
+        const photoRes = {
+            id : photo.photo_id,
+            title: photo.title,
+            description: photo.description,
+            user_id: photo.user_id
+        }
+        console.log('single photo', photo)
+        if (!photoRes) {
             throw new Error('Снимката не е намерена.')
         } else {
-            req.status(200).json(photo);
+            res.status(200).json(photoRes);
         }
     } catch (err) {
         const errors = mapErrors(err);
@@ -30,14 +36,14 @@ async function getPhotoById (req, res) {
 // @route       GET api/photos
 // @access      public
 async function getLastTen (req, res) {
-    console.log(req.body)
+  //  console.log(req.body)
     try {
         const photo = await Photo.findOne({
             where: {
                 photo_id: 1
             }
         })
-        console.log(photo);
+       // console.log(photo);
         const updatedPhoto = {
             _id : photo.photo_id,
             title: photo.title,

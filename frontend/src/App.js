@@ -16,6 +16,7 @@ import Profiles from "./screens/users/Profiles";
 import Contacts from "./screens/contacts/Contacts";
 import PrivateRoute from "./components/PrivateRoute";
 import AddPhotos from "./screens/photos/AddPhotos";
+import SinglePhoto from "./screens/single-photo/SinglePhoto";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/photos" element={<Photos />}></Route>
+        <Route path="/photos/:id" element={<SinglePhoto />}></Route>
         <Route path="/profiles" element={<Profiles />}></Route>
         <Route path="/contacts" element={<Contacts />}></Route>
         <Route path="/add" element={<PrivateRoute />}>
