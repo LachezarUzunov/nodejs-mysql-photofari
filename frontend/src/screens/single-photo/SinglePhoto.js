@@ -78,7 +78,7 @@ const SinglePhoto = () => {
                     <h1>{title}</h1>
                     <h2>{photo.description}</h2>
                     <div>
-                        {isOwner || user.isAdmin ? (
+                        {isOwner || activeUser.isAdmin ? (
                             <button className="primaryBtn">Изтрий</button>
                         ) : null}
                     </div>
