@@ -2,6 +2,30 @@ const User = require('../models/userModel');
 const Photo = require('../models/photoModel');
 const mapErrors = require('../util/mappers');
 
+// @desc        Get single photo
+// @route       GET /api/photos/:id
+// @access      public
+async function getPhotoById (req, res) {
+
+    try {
+        const photo = await Photo.findOne({
+            where: {
+                photo_id: req.params.id
+            }
+        })
+
+        if (!photo) {
+            throw new Error('Снимката не е намерена.')
+        } else {
+            req.status(200).json(photo);
+        }
+    } catch (err) {
+        const errors = mapErrors(err);
+        res.status(404).json(errors)
+    }
+    
+}
+
 // @desc        Get latest 10 photos
 // @route       GET api/photos
 // @access      public
@@ -80,4 +104,5 @@ async function postPhoto (req, res) {
 module.exports = {
     postPhoto,
     getLastTen,
+    getPhotoById
 }
