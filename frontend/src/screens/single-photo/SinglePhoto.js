@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSinglePhoto, reset } from "../../features/photos/photosSlice";
+import { addComment } from "../../features/comments/commentSlice";
 
 import { storage } from "../../firebase";
 import { listAll, ref, getDownloadURL } from "firebase/storage";
@@ -23,6 +24,9 @@ const SinglePhoto = () => {
     const { photo, isPhotoSuccess, isPhotoLoading, isPhotoError, photoMessage } = useSelector(
         (state) => state.photo
     );
+
+    const { comments, isCommentSuccess, isCommentError, isCommentLoading, commentMessage } =
+    useSelector((state) => state.comment);
 
     const title = photo.title ? photo.title : '';
 
@@ -73,7 +77,17 @@ const SinglePhoto = () => {
     }
 
     const onCommentSubmit = () => {
-        console.log(commentInput)
+
+        if(commentInput.length < 5) {
+            toast.error('Коментарът трябва да е с дължина от поне 5 символа!')
+            return;
+        }
+        const commentData = {
+            photo_id: id,
+            comment: commentInput
+        }
+
+        dispatch(addComment(commentData));
     }
 
     if (isPhotoLoading) {

@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Photo = require('../models/photoModel');
+const Comment = require('../models/commentModel');
 const mapErrors = require('../util/mappers');
 
 // @desc        Get single photo
@@ -97,7 +98,7 @@ async function postPhoto (req, res) {
     const newPhoto = await photoObj.save();
 
     if (newPhoto) {
-        req.status(201).json(newPhoto)
+        req.status(201).json(newPhoto);
     } else {
         throw new Error('Невалидно въведена информация.')
     }
@@ -108,8 +109,46 @@ async function postPhoto (req, res) {
     }
 }
 
+// @desc        POST a new comment
+// @route       POST api/photos/comments
+// @access      private - for registered and logged in users only
+async function postComment (req, res) {
+    const { photo_id, comment } = req.body;
+
+    try {
+        const user = await User.findOne({
+            where: {
+                user_id : req.user.id
+            }
+        })
+
+        if (!user) {
+            throw new Error('Такъв потребител не съществува')
+        };
+
+        const commentObj = Comment.build({
+            comment,
+            photo_id,
+            user_id: req.user.id,
+        })
+    
+        const newComment = await commentObj.save();
+    
+        if (newComment) {
+            req.status(201).json(newComment);
+        } else {
+            throw new Error('Невалидно въведена информация.')
+        }
+    } catch (err) {
+        const errors = mapErrors(err);
+        res.json(errors);
+    }
+   
+}
+
 module.exports = {
     postPhoto,
     getLastTen,
-    getPhotoById
+    getPhotoById,
+    postComment
 }
