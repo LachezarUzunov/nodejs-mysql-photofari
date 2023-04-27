@@ -85,6 +85,7 @@ textarea {
   padding: 12px;
   font-size: 16px;
   outline: none;
+  display: block;
 }
 
 p {

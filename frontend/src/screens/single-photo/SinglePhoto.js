@@ -12,6 +12,7 @@ import { listAll, ref, getDownloadURL } from "firebase/storage";
 
 const SinglePhoto = () => {
     const dispatch = useDispatch();
+    const [commentInput, setCommentInput] = useState('')
     const [activeUser, setActiveUser] = useState(false);
     const { id } = useParams();
     const [image, setImage ] = useState();
@@ -66,13 +67,21 @@ const SinglePhoto = () => {
 
     const isOwner = activeUser.id === photo.user_id;
 
+    const commentInputHandler = (e) => {
+        setCommentInput(e.target.value);
+    }
+
+    const onCommentSubmit = () => {
+        console.log(commentInput)
+    }
+
     if (isPhotoLoading) {
         return <Spinner />
     }
 
     return (
         <section className={classes.article}>
-            <article>
+            <article className={classes.photo__box}>
                 <div className={classes.pic}>
                     <img src={image} alt={title}/>
                     <h1>{title}</h1>
@@ -83,6 +92,19 @@ const SinglePhoto = () => {
                         ) : null}
                     </div>
                 </div>
+                {activeUser ? (
+                    <div>
+                        <textarea
+                        className={classes.comment}
+                        onChange={commentInputHandler} 
+                        placeholder="Добави коментар..."
+                        value={commentInput}
+                        rows='4'
+                        />
+                        <button onClick={onCommentSubmit} className="primaryBtn">Добави коментар</button>
+
+                    </div>
+                ) : null}
             </article>
         </section>
     )
