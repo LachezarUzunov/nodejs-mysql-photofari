@@ -135,7 +135,7 @@ async function postComment (req, res) {
         const newComment = await commentObj.save();
     
         if (newComment) {
-            console.log(newComment)
+            //console.log(newComment)
             req.status(201).json(newComment);
         } else {
             throw new Error('Невалидно въведена информация.')
@@ -144,12 +144,44 @@ async function postComment (req, res) {
         const errors = mapErrors(err);
         res.json(errors);
     }
-   
 }
+
+// @desc        Get comments
+// @route       GET api/photos/:id/comments
+// @access      public
+async function getComments (req, res) {
+    console.log(req.body)
+      try {
+          const comment = await Comment.findOne({
+              where: {
+                  photo_id: req.params.id
+              }
+          })
+   
+          const updatedComment = {
+            comment_id: comment.comment_id,
+            comment: comment.comment,
+            user_id: comment.user_id,
+            photo_id: comment.photo_id,
+          }
+          let comments = [];
+          // const photos = await Photo.findAll({attributes: [['photo_id', '_id'], ['title'], ['description'], ['photo'], ['user_id', 'user']], order: [[photo_id, 'DESC']], limit: 10})
+          // console.log(photos)
+          console.log(updatedComment)
+          if (updatedComment) {
+              comments.push(updatedComment)
+              res.status(200).json(comments);
+          }
+      } catch (err) {
+          const errors = mapErrors(err);
+          res.json(errors);
+      }
+  }
 
 module.exports = {
     postPhoto,
     getLastTen,
     getPhotoById,
-    postComment
+    postComment,
+    getComments
 }

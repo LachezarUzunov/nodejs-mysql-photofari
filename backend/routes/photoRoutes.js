@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const { postPhoto, getLastTen, getPhotoById, postComment } = require('../controllers/photoController');
+const { postPhoto, getLastTen, getPhotoById, postComment, getComments } = require('../controllers/photoController');
 
 
 // POST, EDIT and DELETE photos
@@ -13,5 +13,6 @@ router.get('/:id', getPhotoById);
 
 // POST comments
 router.post('/comments', protect, postComment);
+router.get('/:id/comments', getComments);
 
 module.exports = router;

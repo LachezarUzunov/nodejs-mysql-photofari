@@ -28,6 +28,7 @@ const SinglePhoto = () => {
     const { comments, isCommentSuccess, isCommentError, isCommentLoading, commentMessage } =
     useSelector((state) => state.comment);
 
+        console.log(comments)
     const title = photo.title ? photo.title : '';
 
     useEffect(() => {
