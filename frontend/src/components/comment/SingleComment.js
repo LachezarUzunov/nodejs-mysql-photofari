@@ -3,7 +3,7 @@ import React from "react";
 const SingleComment = ({comment}) => {
     return (
         <div>
-            <p>{comment.comment}</p>
+            <p>Hello</p>
         </div>
     )
 }

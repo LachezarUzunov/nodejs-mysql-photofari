@@ -20,7 +20,7 @@ async function getPhotoById (req, res) {
             description: photo.description,
             user_id: photo.user_id
         }
-       // console.log('single photo', photo)
+
         if (!photoRes) {
             throw new Error('Снимката не е намерена.')
         } else {
@@ -30,7 +30,6 @@ async function getPhotoById (req, res) {
         const errors = mapErrors(err);
         res.status(404).json(errors)
     }
-    
 }
 
 // @desc        Get latest 10 photos
@@ -145,26 +144,23 @@ async function postComment (req, res) {
 // @route       GET api/photos/:id/comments
 // @access      public
 async function getComments (req, res) {
-    console.log(req.body)
+    console.log(req.params.id)
+
       try {
-          const comment = await Comment.findOne({
+          const comment = await Comment.findAll({
               where: {
                   photo_id: req.params.id
               }
           })
-   
-          const updatedComment = {
-            comment_id: comment.comment_id,
-            comment: comment.comment,
-            user_id: comment.user_id,
-            photo_id: comment.photo_id,
-          }
-          let comments = [];
-          // const photos = await Photo.findAll({attributes: [['photo_id', '_id'], ['title'], ['description'], ['photo'], ['user_id', 'user']], order: [[photo_id, 'DESC']], limit: 10})
-          // console.log(photos)
-          console.log(updatedComment)
-          if (updatedComment) {
-              comments.push(updatedComment)
+          comment.forEach(c => console.log(c.toJSON()))
+          const comments = comment.map(c => {
+            return {
+                comment_id: c.comment_id,
+                comment: c.comment
+            }
+          })
+      
+          if (comments) {
               res.status(200).json(comments);
           }
       } catch (err) {

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSinglePhoto, reset } from "../../features/photos/photosSlice";
-import { addComment } from "../../features/comments/commentSlice";
+import { addComment, getAllComments } from "../../features/comments/commentSlice";
 
 import { storage } from "../../firebase";
 import { listAll, ref, getDownloadURL } from "firebase/storage";
@@ -28,7 +28,6 @@ const SinglePhoto = () => {
     const { comments, isCommentSuccess, isCommentError, isCommentLoading, commentMessage } =
     useSelector((state) => state.comment);
 
-        console.log(comments)
     const title = photo.title ? photo.title : '';
 
     useEffect(() => {
@@ -36,6 +35,10 @@ const SinglePhoto = () => {
             ref(storage, `${photo.user_id}/${title.split(' ').join('')}/`)
         );
     }, [title, photo.user_id]);
+
+    useEffect(() => {
+       dispatch(getAllComments(id))
+    }, [id, dispatch])
 
     useEffect(() => {
         listAll(imageListRef).then((res) => {
