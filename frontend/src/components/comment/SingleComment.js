@@ -1,9 +1,12 @@
 import React from "react";
 
 const SingleComment = ({comment}) => {
+
     return (
         <div>
-            <p>Hello</p>
+            {comment ? (
+                <p>{comment.comment}</p>
+            ) : null}
         </div>
     )
 }

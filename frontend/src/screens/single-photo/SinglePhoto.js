@@ -25,7 +25,7 @@ const SinglePhoto = () => {
         (state) => state.photo
     );
 
-    const { comments, isCommentSuccess, isCommentError, isCommentLoading, commentMessage } =
+    const { comments } =
     useSelector((state) => state.comment);
 
     const title = photo.title ? photo.title : '';
@@ -125,7 +125,7 @@ const SinglePhoto = () => {
                     </div>
                 ) : null}
 
-                {comments.length > 1 ? (
+                {comments.length > 0 ? (
                     comments.map((comment) => (
                         <SingleComment comment={comment} key={comment.comment_id}/>
                     ))

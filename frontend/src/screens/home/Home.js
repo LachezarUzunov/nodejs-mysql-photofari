@@ -29,7 +29,7 @@ const Home = () => {
       }
     };
   }, [isPhotoSuccess, dispatch]);
-  console.log(photos);
+
   if (isPhotoLoading) {
     return <Spinner />;
   }

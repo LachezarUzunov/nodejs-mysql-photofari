@@ -33,7 +33,6 @@ const getLastTen = async () => {
 
   if (response.status === 200) {
     const photos = await response.json();
-    console.log(photos);
     return photos;
   }
 };
