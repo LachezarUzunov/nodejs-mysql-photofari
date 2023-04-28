@@ -50,17 +50,6 @@ const User = sequelize.define('user', {
 
 module.exports = User;
 
-// ------- CREATING TABLES ---------- //
-const createTable = async () => {
-    try {
-        const res = await Comment.sync();
-        console.log('Table and model synced successfully')
-    } catch (err) {
-        console.log('Error syncing the table and the model')
-    }
-}
-//createTable();
-
 // Linking Photos and Users
 User.hasMany(Photo, { as: 'photos'});
 Photo.belongsTo(User, {
@@ -80,14 +69,3 @@ Comment.belongsTo(Photo, {
 });
 
 
-// -------- UPDATING TABLES ------------ //
-const updateTable = async () => {
-    try {
-        await Comment.sync({ alter: true });
-        console.log('Table and model synced successfully!')
-    } catch (err) {
-        console.log('Could not sync table and model')
-    }
-}
-
-//updateTable();
