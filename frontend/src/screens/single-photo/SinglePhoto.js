@@ -15,6 +15,7 @@ import SingleComment from "../../components/comment/SingleComment";
 const SinglePhoto = () => {
     const dispatch = useDispatch();
     const [commentInput, setCommentInput] = useState('')
+    const [isCommendSubmitted, setIsCommentSubmitted] = useState(false)
     const [activeUser, setActiveUser] = useState(false);
     const { id } = useParams();
     const [image, setImage ] = useState();
@@ -38,7 +39,7 @@ const SinglePhoto = () => {
 
     useEffect(() => {
        dispatch(getAllComments(id))
-    }, [id, dispatch])
+    }, [isCommendSubmitted])
 
     useEffect(() => {
         listAll(imageListRef).then((res) => {
@@ -92,6 +93,9 @@ const SinglePhoto = () => {
         }
 
         dispatch(addComment(commentData));
+        setIsCommentSubmitted(!isCommendSubmitted)
+        console.log(isCommendSubmitted)
+        setCommentInput('')
     }
 
     if (isPhotoLoading) {
@@ -111,6 +115,16 @@ const SinglePhoto = () => {
                         ) : null}
                     </div>
                 </div>
+                <div>
+
+                </div>
+                {comments.length > 0 ? (
+                    comments.map((comment) => (
+                        <SingleComment comment={comment} key={comment.comment_id}/>
+                    ))
+                ) : <p>Все още няма коментари към тази снимка</p>
+                }
+
                 {activeUser ? (
                     <div>
                         <textarea
@@ -125,13 +139,7 @@ const SinglePhoto = () => {
                     </div>
                 ) : null}
 
-                {comments.length > 0 ? (
-                    comments.map((comment) => (
-                        <SingleComment comment={comment} key={comment.comment_id}/>
-                    ))
-                ) : <p>Все още няма коментари към тази снимка</p>
-                }
-                <SingleComment />
+                
             </article>
         </section>
     )
