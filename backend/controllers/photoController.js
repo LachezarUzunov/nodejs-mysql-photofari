@@ -37,28 +37,24 @@ async function getPhotoById (req, res) {
 // @route       GET api/photos
 // @access      public
 async function getLastTen (req, res) {
-  //  console.log(req.body)
     try {
-        const photo = await Photo.findOne({
-            where: {
-                photo_id: 1
-            }
-        })
-       // console.log(photo);
-        const updatedPhoto = {
-            _id : photo.photo_id,
-            title: photo.title,
-            description: photo.description,
-            photo: photo.photo,
-            user: photo.user_id,
-        }
-        let photos = [];
-        // const photos = await Photo.findAll({attributes: [['photo_id', '_id'], ['title'], ['description'], ['photo'], ['user_id', 'user']], order: [[photo_id, 'DESC']], limit: 10})
-        // console.log(photos)
+        const photos = await Photo.findAll({
+            limit: 10,
+            order: [['photo_id', 'DESC']]
+        });
+  
+        const updatedPhotos = photos.map(p => {
+            return  {
+                _id: p.photo_id,
+                title: p.title,
+                description: p.description,
+                photo: p.photo,
+                user: p.user_id
+            }  
+        });
      
-        if (updatedPhoto) {
-            photos.push(updatedPhoto)
-            res.status(200).json(photos);
+        if (updatedPhotos) {
+            res.status(200).json(updatedPhotos);
         }
     } catch (err) {
         const errors = mapErrors(err);
@@ -126,13 +122,12 @@ async function postComment (req, res) {
             throw new Error('Такъв потребител не съществува')
         };
 
-        const commentObj = Comment.build({
+        const newComment = await Comment.create({
             comment,
             photo_id,
-            user_id: req.user.id,
+            user_id: req.user.id
         })
-    
-        const newComment = await commentObj.save();
+       
     
         if (newComment) {
             //console.log(newComment)
