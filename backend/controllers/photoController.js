@@ -74,7 +74,7 @@ async function postPhoto (req, res) {
             user_id: req.user.id
         }
     })
-
+        
     if (!user) {
         throw new Error('Такъв потребител не съществува')
     };
@@ -93,6 +93,12 @@ async function postPhoto (req, res) {
     const newPhoto = await photoObj.save();
 
     if (newPhoto) {
+        await User.update({ pics: +1 }, {
+            where: {
+                user_id: req.user.id
+            }
+        });
+    
         req.status(201).json(newPhoto);
     } else {
         throw new Error('Невалидно въведена информация.')
@@ -152,7 +158,7 @@ async function getComments (req, res) {
                   photo_id: req.params.id
               }
           })
-          comment.forEach(c => console.log(c.toJSON()))
+   
           const comments = comment.map(c => {
             return {
                 comment_id: c.comment_id,
