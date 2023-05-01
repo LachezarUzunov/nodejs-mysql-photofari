@@ -112,6 +112,53 @@ async function postPhoto (req, res) {
     }
 }
 
+// @desc        Delete a photo
+// @route       DELETE api/photos/:id
+// @access      private - for owners only
+async function deletePhotoById (req, res) {
+
+    try {
+        const user = await User.findOne({
+            where: {
+                user_id : req.user.id
+            }
+        })
+
+        if (!user) {
+            res.status(401);
+            throw new Error('Потребителят не е намерен')
+        }
+
+        const photo = await Photo.findOne({
+            where: {
+                photo_id : req.params.id
+            }
+        })
+
+        if (!photo) {
+            res.status(404);
+            throw new Error('Снимката не е намерена')
+        }
+
+        if (photo.user_id !== req.user.id) {
+            res.status(401);
+            throw new Error('Нямате достъп');
+        }
+
+        await Photo.destroy({
+            where: {
+                photo_id : req.params.id
+            }
+        })
+
+        res.status(200).json({success: true})
+    } catch (err) {
+        const errors = mapErrors(err);
+        res.json(errors);
+    }
+   
+}
+
 // @desc        POST a new comment
 // @route       POST api/photos/comments
 // @access      private - for registered and logged in users only
@@ -181,6 +228,7 @@ module.exports = {
     postPhoto,
     getLastTen,
     getPhotoById,
+    deletePhotoById,
     postComment,
     getComments
 }
