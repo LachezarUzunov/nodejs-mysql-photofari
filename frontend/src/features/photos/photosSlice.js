@@ -68,6 +68,22 @@ export const getSinglePhoto = createAsyncThunk(
   }
 )
 
+// DELETE a photo
+export const deletePhoto = createAsyncThunk('photo/deletePhoto', 
+  async (photoId, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+    try {
+      return await photosService.deletePhoto(photoId, token)
+    } catch (error) {
+      const message = 
+        (error.response && error.response.data &&
+          error.response.data.message) || error.message ||
+          error.toString();
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }) 
+
 export const photosSlice = createSlice({
   name: "photo",
   initialState,
@@ -122,6 +138,20 @@ export const photosSlice = createSlice({
         state.isPhotoError = true;
         state.isPhotoSuccess = false;
         state.photoMessage = action.payload;
+      })
+      // Delete a photo
+      .addCase(deletePhoto.pending, (state) => {
+        state.isPhotoLoading = true;
+      })
+      .addCase(deletePhoto.fulfilled, (state, action) => {
+        state.isPhotoLoading = false;
+        state.isPhotoSuccess = true;
+        state.photo = {};
+      })
+      .addCase(deletePhoto.rejected, (state, action) => {
+        state.isPhotoLoading = false;
+        state.isPhotoError = true;
+        state.message = action.payload;
       })
   },
 });

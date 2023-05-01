@@ -93,7 +93,9 @@ async function postPhoto (req, res) {
     const newPhoto = await photoObj.save();
 
     if (newPhoto) {
-        await User.update({ pics: +1 }, {
+        const picsNum = user.pics + 1;
+
+        await User.update({ pics: picsNum }, {
             where: {
                 user_id: req.user.id
             }

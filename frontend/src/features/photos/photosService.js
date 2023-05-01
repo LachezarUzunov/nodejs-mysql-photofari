@@ -47,10 +47,27 @@ const getPhotoById = async (photoId) => {
   }
 }
 
+const deletePhoto = async (photoId, token) => {
+  const response = await fetch(`http://localhost:5000/api/photos/${photoId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    }
+  )
+
+  if (response.status === 200) {
+    return response.message;
+  }
+}
+
 const photosService = {
   publishPhoto,
   getLastTen,
-  getPhotoById
+  getPhotoById,
+  deletePhoto
 };
 
 export default photosService;

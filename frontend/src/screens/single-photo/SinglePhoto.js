@@ -4,8 +4,8 @@ import Spinner from "../../components/layout/Spinner";
 import { toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getSinglePhoto, reset } from "../../features/photos/photosSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { deletePhoto, getSinglePhoto, reset } from "../../features/photos/photosSlice";
 import { addComment, getAllComments } from "../../features/comments/commentSlice";
 
 import { storage } from "../../firebase";
@@ -14,6 +14,7 @@ import SingleComment from "../../components/comment/SingleComment";
 
 const SinglePhoto = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [commentInput, setCommentInput] = useState('')
     const [isCommendSubmitted, setIsCommentSubmitted] = useState(false)
     const [activeUser, setActiveUser] = useState(false);
@@ -98,6 +99,16 @@ const SinglePhoto = () => {
         setCommentInput('')
     }
 
+    const onPhotoDelete = () => {
+        if (isOwner || user.isAdmin) {
+            dispatch(deletePhoto(id))
+            if (isPhotoSuccess) {
+                navigate('/')
+            }
+        }
+        
+    }
+
     if (isPhotoLoading) {
         return <Spinner />
     }
@@ -111,7 +122,7 @@ const SinglePhoto = () => {
                     <h2>{photo.description}</h2>
                     <div>
                         {isOwner || activeUser.isAdmin ? (
-                            <button className="primaryBtn">Изтрий</button>
+                            <button onClick={onPhotoDelete} className="primaryBtn">Изтрий</button>
                         ) : null}
                     </div>
                 </div>
