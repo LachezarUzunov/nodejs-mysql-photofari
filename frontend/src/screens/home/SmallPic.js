@@ -24,7 +24,7 @@ const SmallPic = ({ title, user, description, photo }) => {
       <article className={classes.image_section}>
         <div className={classes.picsList}>
           <img className={classes.smallPic} src={image} alt={title}></img>
-          <h2>{description}</h2>
+          <h2>{title}</h2>
           <div>
             <div className={classes.btnDiv}>
               <Link className="primaryBtn" to={`/photos/${photo._id}`}>

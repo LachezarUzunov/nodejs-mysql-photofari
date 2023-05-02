@@ -5,6 +5,17 @@
   width: 350px;
 }
 
+.picsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
 .picsList img {
   max-width: 350px;
+  border-radius: 15px;
+  box-shadow: 2px 3px 29px 1px rgba(0,0,0,0.71);
+-webkit-box-shadow: 2px 3px 29px 1px rgba(0,0,0,0.71);
+-moz-box-shadow: 2px 3px 29px 1px rgba(0,0,0,0.71);
 }

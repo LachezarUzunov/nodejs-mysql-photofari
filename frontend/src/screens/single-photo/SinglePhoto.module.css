@@ -4,6 +4,10 @@
 
 .pic img {
     max-width: 800px;
+    box-shadow: 2px 3px 29px 1px rgba(0,0,0,0.71);
+-webkit-box-shadow: 2px 3px 29px 1px rgba(0,0,0,0.71);
+-moz-box-shadow: 2px 3px 29px 1px rgba(0,0,0,0.71);
+border-radius: 10px;
 }
 
 .photo__box {
@@ -12,6 +16,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--aqua);
+    border-radius: 15px;
+}
+
+.pic {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .comment {
