@@ -17,6 +17,7 @@ import Contacts from "./screens/contacts/Contacts";
 import PrivateRoute from "./components/PrivateRoute";
 import AddPhotos from "./screens/photos/AddPhotos";
 import SinglePhoto from "./screens/single-photo/SinglePhoto";
+import Dashboard from "./screens/dashboard/Dashboard";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
         <Route path="/contacts" element={<Contacts />}></Route>
         <Route path="/add" element={<PrivateRoute />}>
           <Route path="/add" element={<AddPhotos />} />
+        </Route>
+        <Route path="/admin" element={<PrivateRoute />}>
+          <Route path="/admin" element={<Dashboard />}/>
         </Route>
 
         {/* <Route path="/my-profile" element={<Contacts />}></Route> */}

@@ -32,14 +32,22 @@ const MainNavigation = () => {
         <li>
           <Link to="/profiles">Потребители</Link>
         </li>
-        <li>
+        {user && user.isAdmin ? null :  <li>
           <Link to="/contacts">Контакти</Link>
-        </li>
+        </li>}
+       
         {/* {!user && (
           <li>
             <Link to="/login">Влез</Link>
           </li>
         )} */}
+        {user && user.isAdmin && (
+          <li>
+            <Link to="/admin">
+              Контролен панел
+            </Link>
+          </li>
+        )}
         {user && (
           <li>
             <Link to="/" onClick={onLogout}>
@@ -47,6 +55,7 @@ const MainNavigation = () => {
             </Link>
           </li>
         )}
+         
       </ul>
     </nav>
   );

@@ -1,0 +1,4 @@
+.main {
+    width: var(--lg-screen);
+    margin: 0 auto;
+}

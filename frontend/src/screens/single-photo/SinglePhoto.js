@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { deletePhoto, getSinglePhoto, reset } from "../../features/photos/photosSlice";
+import { deletePhoto, getLastTen, getSinglePhoto, reset } from "../../features/photos/photosSlice";
 import { addComment, getAllComments } from "../../features/comments/commentSlice";
 
 import { storage } from "../../firebase";
@@ -103,6 +103,7 @@ const SinglePhoto = () => {
         if (isOwner || user.isAdmin) {
             dispatch(deletePhoto(id))
             if (isPhotoSuccess) {
+                dispatch(getLastTen())
                 navigate('/')
             }
         }
@@ -131,7 +132,7 @@ const SinglePhoto = () => {
                 </div>
                 {comments.length > 0 ? (
                     comments.map((comment) => (
-                        <SingleComment comment={comment} key={comment.comment_id}/>
+                        <SingleComment comment={comment} key={comment.comment_id} isAdmin={activeUser.isAdmin}/>
                     ))
                 ) : <p>Все още няма коментари към тази снимка</p>
                 }
