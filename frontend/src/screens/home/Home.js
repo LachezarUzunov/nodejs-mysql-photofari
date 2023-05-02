@@ -46,9 +46,10 @@ const Home = () => {
               <SmallPic
                 key={photo._id}
                 title={photo.title}
-                user={photo.user}
+                userId={photo.user}
                 description={photo.description}
                 photo={photo}
+                user={user}
               ></SmallPic>
             ))
           : null}

@@ -2,3 +2,10 @@
     width: var(--lg-screen);
     margin: 0 auto;
 }
+
+.pics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+  }
+  

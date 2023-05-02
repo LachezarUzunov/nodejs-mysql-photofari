@@ -4,11 +4,11 @@ import classes from "./SmallPic.module.css";
 import { storage } from "../../firebase";
 import { listAll, ref, getDownloadURL } from "firebase/storage";
 
-const SmallPic = ({ title, user, description, photo }) => {
+const SmallPic = ({ title, userId, photo, user }) => {
   const [image, setImage] = useState();
 
-  const imageListRef = ref(storage, `${user}/${title.split(" ").join("")}/`);
-
+  const imageListRef = ref(storage, `${userId}/${title.split(" ").join("")}/`);
+  console.log(user)
   useEffect(() => {
     listAll(imageListRef).then((res) => {
       res.items.forEach((item) => {
@@ -30,6 +30,9 @@ const SmallPic = ({ title, user, description, photo }) => {
               <Link className="primaryBtn" to={`/photos/${photo._id}`}>
                 ВИЖ ПОВЕЧЕ
               </Link>
+              {user && user.isAdmin ? (
+                <button>Изтрий</button>
+              ) : null}
             </div>
           </div>
         </div>
