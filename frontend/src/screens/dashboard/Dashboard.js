@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import classes from './Dashboard.module.css';
 
 import { useSelector, useDispatch } from "react-redux";
-import { getLastTen, reset } from "../../features/photos/photosSlice";
+import { deletePhoto, getLastTen, reset } from "../../features/photos/photosSlice";
 import Spinner from "../../components/layout/Spinner";
 import SmallPic from "../home/SmallPic";
 
@@ -16,7 +16,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         dispatch(getLastTen());
-      }, [dispatch]);
+      }, [dispatch, isPhotoSuccess]);
     
       useEffect(() => {
         return () => {
@@ -25,6 +25,13 @@ const Dashboard = () => {
           }
         };
       }, [isPhotoSuccess, dispatch]);
+
+      const onDelete = (id) => {
+        dispatch(deletePhoto(id))
+        if (isPhotoSuccess) {
+            dispatch(reset);
+        }
+      }
     
       if (isPhotoLoading) {
         return <Spinner />;
@@ -47,6 +54,7 @@ const Dashboard = () => {
                 description={photo.description}
                 photo={photo}
                 user={user}
+                onDelete={onDelete}
               ></SmallPic>
             ))
           : null}

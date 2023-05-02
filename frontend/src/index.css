@@ -134,3 +134,20 @@ p {
   font-size: 18px;
   margin-top: 20px;
 }
+
+
+.btnAdmin {
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  word-spacing: 4px;
+  color: black;
+  border: none;
+  background-color: red;
+  border-radius: 15px;
+  padding: 12px 20px;
+  transition: all 300ms ease-in-out;
+  font-size: 18px;
+  margin-top: 20px;
+}

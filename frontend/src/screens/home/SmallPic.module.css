@@ -19,3 +19,8 @@
 -webkit-box-shadow: 2px 3px 29px 1px rgba(0,0,0,0.71);
 -moz-box-shadow: 2px 3px 29px 1px rgba(0,0,0,0.71);
 }
+
+.btnDiv {
+  display: flex;
+  gap: 4rem;
+}

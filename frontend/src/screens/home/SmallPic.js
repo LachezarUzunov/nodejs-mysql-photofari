@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import classes from "./SmallPic.module.css";
 import { storage } from "../../firebase";
 import { listAll, ref, getDownloadURL } from "firebase/storage";
+import { useDispatch } from "react-redux";
+import { deletePhoto } from "../../features/photos/photosSlice";
 
-const SmallPic = ({ title, userId, photo, user }) => {
+const SmallPic = ({ title, userId, photo, user, onDelete }) => {
   const [image, setImage] = useState();
 
   const imageListRef = ref(storage, `${userId}/${title.split(" ").join("")}/`);
-  console.log(user)
+  console.log(photo._id)
   useEffect(() => {
     listAll(imageListRef).then((res) => {
       res.items.forEach((item) => {
@@ -18,6 +20,10 @@ const SmallPic = ({ title, userId, photo, user }) => {
       });
     });
   }, []);
+
+  const onPhotoDelete = () => {
+    onDelete(photo._id)
+  }
 
   return (
     <section className={classes.article}>
@@ -31,7 +37,7 @@ const SmallPic = ({ title, userId, photo, user }) => {
                 ВИЖ ПОВЕЧЕ
               </Link>
               {user && user.isAdmin ? (
-                <button>Изтрий</button>
+                <button onClick={onPhotoDelete} className="btnAdmin">Изтрий</button>
               ) : null}
             </div>
           </div>
