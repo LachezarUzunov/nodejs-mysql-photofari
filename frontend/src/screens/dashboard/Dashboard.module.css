@@ -9,3 +9,16 @@
     gap: 4rem;
   }
   
+.last__five {
+    border: solid 2px var(--aqua);
+    border-radius: 15px;
+    margin-top: 4rem;
+    margin-bottom: 6rem;
+    padding-top: 2rem;
+}
+
+.last__five_heading {
+    text-align: center;
+    font-size: 4rem;
+}
+

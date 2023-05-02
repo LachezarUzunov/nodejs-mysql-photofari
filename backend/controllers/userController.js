@@ -78,7 +78,6 @@ async function loginUser (req, res) {
             email: email
         }
     })
-   // console.log(user)
     try {
         // Check user and password match
         if (user && (await brcypt.compare(password, user.password))) {
@@ -100,6 +99,37 @@ async function loginUser (req, res) {
     }
 }
 
+
+// @desc        Get last 5 registered users
+// @route       /api/users/lastFive
+// @access      Private - for admins only
+async function getLastFive (req, res) {
+    
+    try {
+        const users = await User.findAll({
+            limit: 5,
+            order: [['user_id', 'DESC']]
+        });
+  
+        const updatedUsers = users.map(u => {
+            return  {
+                id: u.user_id,
+                name: u.name,
+                email: u.email,
+                isAdmin: u.isAdmin,
+                pics: u.pics,
+            }  
+        });
+     
+        if (updatedUsers) {
+            res.status(200).json(updatedUsers);
+        }
+    } catch (err) {
+        const errors = mapErrors(err);
+        res.json(errors);
+    }
+}
+
 // GENERATE TOKEN
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" })
@@ -107,5 +137,6 @@ const generateToken = (id) => {
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getLastFive
 }

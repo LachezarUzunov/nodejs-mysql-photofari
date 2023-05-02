@@ -5,32 +5,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { deletePhoto, getLastTen, reset } from "../../features/photos/photosSlice";
 import Spinner from "../../components/layout/Spinner";
 import SmallPic from "../home/SmallPic";
+import { getLastFive } from "../../features/auth/authSlice";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
 
-    const { user } = useSelector((state) => state.auth);
+    const { users, user } = useSelector((state) => state.auth);
     const { photos, isPhotoLoading, isPhotoSuccess } = useSelector(
         (state) => state.photo
       );
+        console.log(users)
+    useEffect(() => {
+        dispatch(getLastFive())
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(getLastTen());
-      }, [dispatch, isPhotoSuccess]);
-    
+      }, [dispatch]);
+
       useEffect(() => {
-        return () => {
-          if (isPhotoSuccess) {
-            dispatch(reset());
-          }
-        };
-      }, [isPhotoSuccess, dispatch]);
+        if (isPhotoSuccess) {
+          dispatch(reset());
+        }
+    }, [isPhotoSuccess, dispatch]);
 
       const onDelete = (id) => {
         dispatch(deletePhoto(id))
-        if (isPhotoSuccess) {
-            dispatch(reset);
-        }
+      //  dispatch(reset);
       }
     
       if (isPhotoLoading) {
@@ -39,11 +40,11 @@ const Dashboard = () => {
 
     return (
         <section className={classes.main}>
-            <section>
-                <h2>Последни 5 регистрирани потребители</h2>
+            <section className={classes.last__five}>
+                <h2 className={classes.last__five_heading}>Последни 5 регистрирани потребители</h2>
             </section>
-            <section>
-                <h2>Последни 5 добавени снимки</h2>
+            <section className={classes.last__five}>
+                <h2 className={classes.last__five_heading}>Последни 5 добавени снимки</h2>
                 <article className={classes.pics}>
         {photos
           ? photos.slice(0, 5).map((photo) => (

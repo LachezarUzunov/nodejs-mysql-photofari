@@ -46,10 +46,25 @@ const logout = () => {
   localStorage.removeItem("user");
 };
 
+const getLastFiveRegistered = async (token) => {
+  const response = await fetch(`http://localhost:5000/api/users/lastFive`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.status === 200) {
+    const users = await response.json();
+    return users;
+  }
+}
+
 const authService = {
   register,
   login,
   logout,
+  getLastFiveRegistered
 };
 
 export default authService;

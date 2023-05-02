@@ -23,11 +23,9 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    return () => {
       if (isPhotoSuccess) {
         dispatch(reset());
       }
-    };
   }, [isPhotoSuccess, dispatch]);
 
   if (isPhotoLoading) {

@@ -12,7 +12,7 @@ const SingleComment = ({comment, isAdmin}) => {
             </div>
             {isAdmin ? (
                   <div>
-                  <button className="primaryBtn">Изтрий</button>
+                  <button className="primaryBtn">Изтрий коментар</button>
               </div>
             ) : null}
         </article>

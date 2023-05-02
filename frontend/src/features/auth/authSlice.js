@@ -5,6 +5,7 @@ import authService from "./authService";
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
+  users: [],
   user: user ? user : null,
   isError: false,
   isSuccess: false,
@@ -51,6 +52,24 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
 });
 
+// Admin request
+export const getLastFive = createAsyncThunk('auth/lastFive',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await authService.getLastFiveRegistered(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  })
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -93,7 +112,21 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.message = action.payload;
-      });
+      })
+      // Admin requests
+      .addCase(getLastFive.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getLastFive.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.users = action.payload;
+      })
+      .addCase(getLastFive.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
   },
 });
 
